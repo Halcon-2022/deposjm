@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DepoSJM_v6 - Sistema Administrativo</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial;background:#eef1f6}
+
+/* HEADER */
+header{
+background:#1F3A6F;
+color:white;
+text-align:center;
+padding:35px 15px 20px;
+}
+header img{width:150px;margin-bottom:8px}
+#fechaHora{font-size:14px;opacity:.9}
+
+/* LOGIN */
+#loginDiv{
+max-width:420px;
+margin:-30px auto 40px;
+background:white;
+padding:40px 25px;
+border-radius:25px;
+box-shadow:0 20px 40px rgba(0,0,0,.15);
+text-align:center;
+position:relative;
+animation:fadeIn .6s ease;
+}
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(30px)}
+to{opacity:1;transform:translateY(0)}
+}
+.logo-v{width:170px;margin-bottom:25px}
+.input-group{position:relative;margin-bottom:18px}
+.input-group input{
+width:100%;
+padding:15px 45px 15px 15px;
+border:1px solid #ddd;
+border-radius:14px;
+font-size:16px;
+}
+.input-group input:focus{
+border-color:#1F3A6F;
+outline:none;
+box-shadow:0 0 6px rgba(31,58,111,.3);
+}
+.toggle-pass{
+position:absolute;
+right:15px;
+top:50%;
+transform:translateY(-50%);
+cursor:pointer;
+font-size:18px;
+color:#555;
+}
+.login-btn{
+width:100%;
+padding:15px;
+background:#1F3A6F;
+color:white;
+border:none;
+border-radius:14px;
+font-size:17px;
+font-weight:bold;
+cursor:pointer;
+}
+.login-btn:hover{background:#162c55}
+.link-recuperar{margin-top:15px;font-size:14px;color:#555}
+
+/* CONFIG LOGIN */
+.config-wrapper{position:absolute;top:15px;right:15px}
+.config-btn{
+background:white;
+color:#1F3A6F;
+width:38px;height:38px;
+border-radius:50%;
+display:flex;align-items:center;justify-content:center;
+cursor:pointer;
+box-shadow:0 4px 10px rgba(0,0,0,.2);
+}
+.config-menu{
+position:absolute;
+top:50px;
+right:0;
+background:#1F3A6F;
+color:white;
+width:210px;
+padding:15px;
+border-radius:15px;
+display:none;
+}
+.menu-item{
+display:flex;
+align-items:center;
+gap:10px;
+margin-bottom:12px;
+font-size:15px;
+}
+.menu-item a{color:white;text-decoration:none}
+.menu-item a:hover{text-decoration:underline}
+
+/* SISTEMA */
+#mainApp{display:none}
+nav{display:flex;background:#2e59d9;flex-wrap:wrap}
+nav button{
+flex:1;
+padding:10px;
+border:none;
+background:#2e59d9;
+color:white;
+cursor:pointer;
+}
+nav button:hover{background:#1F3A6F}
+section{display:none;padding:15px}
+.active{display:block}
+input,select,button{margin:5px;padding:6px}
+table{width:100%;border-collapse:collapse;margin-top:10px}
+th,td{border:1px solid #ccc;padding:6px;text-align:center}
+th{background:#2e59d9;color:white}
+img.thumb{width:50px;cursor:pointer;border-radius:4px}
+footer{
+background:#1F3A6F;
+color:white;
+text-align:center;
+padding:15px;
+margin-top:30px;
+}
+@media(max-width:480px){
+#loginDiv{margin:-20px 15px 30px;padding:30px 20px}
+.logo-v{width:140px}
+}
+</style>
+</head>
+<body>
+
+<header>
+<img src="image/depweb.png">
+<div id="fechaHora"></div>
+</header>
+
+<!-- LOGIN -->
+<div id="loginDiv">
+
+<div class="config-wrapper">
+<div class="config-btn" onclick="toggleMenu()">⚙️</div>
+
+<div class="config-menu" id="configMenu">
+<div class="menu-item">🌐 <a href="#">Sitio Web</a></div>
+
+<div class="menu-item">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+<path d="M22 12A10 10 0 1 0 10.9 21.95V14.89H8.08V12h2.82V9.8c0-2.8 1.66-4.35 4.2-4.35 1.22 0 2.5.22 2.5.22v2.75h-1.4c-1.38 0-1.8.85-1.8 1.73V12h3.06l-.49 2.89h-2.57v7.06A10 10 0 0 0 22 12z"/>
+</svg>
+<a href="#">Facebook</a>
+</div>
+
+<div class="menu-item">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+<path d="M23.5 6.2s-.2-1.6-.8-2.3c-.8-.9-1.7-.9-2.1-1C17.6 2.7 12 2.7 12 2.7h0s-5.6 0-8.6.2c-.4.1-1.3.1-2.1 1C.7 4.6.5 6.2.5 6.2S.3 8 .3 9.7v1.6C.3 13 .5 14.8.5 14.8s.2 1.6.8 2.3c.8.9 1.9.9 2.4 1 1.8.2 8.3.2 8.3.2s5.6 0 8.6-.2c.4-.1 1.3-.1 2.1-1 .6-.7.8-2.3.8-2.3s.2-1.8.2-3.5V9.7c0-1.7-.2-3.5-.2-3.5zM9.8 14.2V7.8l6.4 3.2-6.4 3.2z"/>
+</svg>
+<a href="#">YouTube</a>
+</div>
+</div>
+</div>
+
+<img src="image/logo_v.png" class="logo-v">
+
+<div class="input-group">
+<input type="text" id="usuario" placeholder="Usuario" autofocus>
+</div>
+
+<div class="input-group">
+<input type="password" id="password" placeholder="Contraseña">
+<span class="toggle-pass" onclick="togglePassword()">👁</span>
+</div>
+
+<button class="login-btn" onclick="login()">INGRESAR</button>
+<div class="link-recuperar">Olvidó su contraseña</div>
+
+</div>
+
+<!-- SISTEMA -->
+<div id="mainApp">
+
+<nav>
+<button onclick="showTab('dashboard')">Dashboard</button>
+<button onclick="showTab('clientes')">Clientes</button>
+<button onclick="showTab('modulos')">Módulos</button>
+<button onclick="showTab('pagos')">Pagos</button>
+<button onclick="showTab('reportes')">Reportes</button>
+<button onclick="showTab('exportar')">Exportar</button>
+<button onclick="logout()">Salir</button>
+</nav>
+
+<section id="dashboard" class="active">
+<h3>Resumen General</h3>
+<div id="resumen"></div>
+</section>
+
+<section id="clientes">
+<h3>Clientes</h3>
+<input id="cNombre" placeholder="Nombre">
+<input id="cApellido" placeholder="Apellido">
+<input id="cDNI" placeholder="DNI">
+<select id="cModulo"></select>
+<input type="file" id="cFoto">
+<button onclick="addCliente()">Guardar</button>
+<table id="tablaClientes"></table>
+</section>
+
+<section id="modulos">
+<h3>Módulos</h3>
+<input id="mDesc" placeholder="Descripción">
+<select id="mTam"><option>Pequeño</option><option>Mediano</option><option>Grande</option></select>
+<select id="mGiro"><option>Seca</option><option>Húmeda</option></select>
+<input id="mMonto" type="number" placeholder="Monto Semanal">
+<input type="file" id="mFoto">
+<button onclick="addModulo()">Guardar</button>
+<table id="tablaModulos"></table>
+</section>
+
+<section id="pagos">
+<h3>Registrar Pago</h3>
+<select id="pCliente"></select>
+<input type="date" id="pFecha">
+<select id="pTipo"><option>Efectivo</option><option>Yape</option></select>
+<input type="number" id="pMonto" placeholder="Monto Pagado">
+<button onclick="addPago()">Registrar</button>
+<table id="tablaPagos"></table>
+</section>
+
+<section id="reportes">
+<h3>Reporte de Morosidad</h3>
+<button onclick="generarReporte()">Generar</button>
+<table id="tablaReporte"></table>
+</section>
+
+<section id="exportar">
+<h3>Exportar Información</h3>
+<select id="tablaExportar">
+<option value="clientes">Clientes</option>
+<option value="modulos">Módulos</option>
+<option value="pagos">Pagos</option>
+</select>
+<select id="tipoExportacion">
+<option value="mysql">MySQL (.sql)</option>
+<option value="mariadb">MariaDB (.sql)</option>
+<option value="sql">SQL Genérico</option>
+<option value="csv">Excel (CSV)</option>
+<option value="json">JSON</option>
+</select>
+<button onclick="exportarDatos()">Exportar</button>
+</section>
+
+</div>
+
+<footer>
+<p>&copy; 2026 ChatGPT-Web© - Prof_Vigil-2026®</p>
+</footer>
+
+<script>
+setInterval(()=>fechaHora.innerText=new Date().toLocaleString(),1000);
+
+if(!localStorage.users){
+localStorage.users=JSON.stringify([{user:"admin",pass:"1234"}]);
+localStorage.clientes="[]";
+localStorage.modulos="[]";
+localStorage.pagos="[]";
+}
+
+function login(){
+let users=JSON.parse(localStorage.users);
+let ok=users.find(x=>x.user==usuario.value && x.pass==password.value);
+if(ok){
+loginDiv.style.display="none";
+mainApp.style.display="block";
+loadAll();
+}else alert("Credenciales incorrectas");
+}
+
+/* LOG OUT */
+
+function logout(){
+
+    // Oculta el sistema
+    document.getElementById("mainApp").style.display = "none";
+
+    // Muestra el login
+    document.getElementById("loginDiv").style.display = "block";
+
+    // Limpia campos
+    document.getElementById("usuario").value = "";
+    document.getElementById("password").value = "";
+
+    // Regresa a Dashboard por defecto
+    showTab("dashboard");
+
+}
+
+/* FIN LOG OUT */
+
+function togglePassword(){password.type=password.type==="password"?"text":"password"}
+function toggleMenu(){
+configMenu.style.display=configMenu.style.display==="block"?"none":"block"
+}
+document.addEventListener("click",e=>{
+if(!document.querySelector(".config-wrapper").contains(e.target))
+configMenu.style.display="none"
+})
+
+function showTab(id){
+document.querySelectorAll("section").forEach(s=>s.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+}
+
+/* FUNCIONES COMPLETAS */
+function addModulo(){
+let modulos=JSON.parse(localStorage.modulos);
+let file=mFoto.files[0];
+let reader=new FileReader();
+reader.onload=function(){
+modulos.push({
+id:Date.now(),
+desc:mDesc.value,
+tam:mTam.value,
+giro:mGiro.value,
+monto:parseFloat(mMonto.value),
+foto:reader.result
+});
+localStorage.modulos=JSON.stringify(modulos);
+renderModulos();
+};
+if(file)reader.readAsDataURL(file);
+}
+function renderModulos(){
+let modulos=JSON.parse(localStorage.modulos);
+let t="<tr><th>Desc</th><th>Tamaño</th><th>Giro</th><th>Monto</th><th>Foto</th></tr>";
+modulos.forEach(m=>{
+t+=`<tr>
+<td>${m.desc}</td>
+<td>${m.tam}</td>
+<td>${m.giro}</td>
+<td>${m.monto}</td>
+<td><img src="${m.foto||''}" class="thumb"></td>
+</tr>`;
+});
+tablaModulos.innerHTML=t;
+updateSelects();
+}
+
+function addCliente(){
+let clientes=JSON.parse(localStorage.clientes);
+let file=cFoto.files[0];
+let reader=new FileReader();
+reader.onload=function(){
+clientes.push({
+id:Date.now(),
+nombre:cNombre.value,
+apellido:cApellido.value,
+dni:cDNI.value,
+modulo:parseInt(cModulo.value),
+foto:reader.result
+});
+localStorage.clientes=JSON.stringify(clientes);
+renderClientes();
+};
+if(file)reader.readAsDataURL(file);
+}
+function renderClientes(){
+let clientes=JSON.parse(localStorage.clientes);
+let modulos=JSON.parse(localStorage.modulos);
+let t="<tr><th>Nombre</th><th>DNI</th><th>Módulo</th><th>Foto</th></tr>";
+clientes.forEach(c=>{
+let m=modulos.find(x=>x.id==c.modulo);
+t+=`<tr>
+<td>${c.nombre} ${c.apellido}</td>
+<td>${c.dni}</td>
+<td>${m?m.desc:""}</td>
+<td><img src="${c.foto||''}" class="thumb"></td>
+</tr>`;
+});
+tablaClientes.innerHTML=t;
+updateSelects();
+}
+
+function addPago(){
+let pagos=JSON.parse(localStorage.pagos);
+let clientes=JSON.parse(localStorage.clientes);
+let modulos=JSON.parse(localStorage.modulos);
+let cliente=clientes.find(c=>c.id==pCliente.value);
+let modulo=modulos.find(m=>m.id==cliente.modulo);
+pagos.push({
+id:Date.now(),
+cliente:cliente.id,
+fecha:pFecha.value,
+montoEsperado:modulo.monto,
+montoPagado:parseFloat(pMonto.value),
+tipo:pTipo.value
+});
+localStorage.pagos=JSON.stringify(pagos);
+renderPagos();
+}
+function renderPagos(){
+let pagos=JSON.parse(localStorage.pagos);
+let clientes=JSON.parse(localStorage.clientes);
+let t="<tr><th>Cliente</th><th>Fecha</th><th>Esperado</th><th>Pagado</th><th>Tipo</th></tr>";
+pagos.forEach(p=>{
+let c=clientes.find(x=>x.id==p.cliente);
+t+=`<tr>
+<td>${c?c.nombre:""}</td>
+<td>${p.fecha}</td>
+<td>${p.montoEsperado}</td>
+<td>${p.montoPagado}</td>
+<td>${p.tipo}</td>
+</tr>`;
+});
+tablaPagos.innerHTML=t;
+}
+
+function generarReporte(){
+let pagos=JSON.parse(localStorage.pagos);
+let clientes=JSON.parse(localStorage.clientes);
+let t="<tr><th>Cliente</th><th>Deuda</th></tr>";
+clientes.forEach(c=>{
+let totalE=0,totalP=0;
+pagos.filter(p=>p.cliente==c.id).forEach(p=>{
+totalE+=p.montoEsperado;
+totalP+=p.montoPagado;
+});
+let deuda=totalE-totalP;
+if(deuda>0)t+=`<tr><td>${c.nombre}</td><td>${deuda}</td></tr>`;
+});
+tablaReporte.innerHTML=t;
+}
+
+function exportarDatos(){
+let tabla=tablaExportar.value;
+let tipo=tipoExportacion.value;
+let datos=JSON.parse(localStorage.getItem(tabla)||"[]");
+if(datos.length==0){alert("No hay datos");return;}
+let contenido="";
+let nombre=tabla+"_"+Date.now();
+if(tipo=="json"){
+contenido=JSON.stringify(datos,null,2);
+}
+else if(tipo=="csv"){
+let head=Object.keys(datos[0]).join(",");
+let rows=datos.map(o=>Object.values(o).join(",")).join("\n");
+contenido=head+"\n"+rows;
+}
+else{
+datos.forEach(o=>{
+let col=Object.keys(o).join(",");
+let val=Object.values(o).map(v=>`'${v}'`).join(",");
+contenido+=`INSERT INTO ${tabla} (${col}) VALUES (${val});\n`;
+});
+}
+let blob=new Blob([contenido]);
+let a=document.createElement("a");
+a.href=URL.createObjectURL(blob);
+a.download=nombre+(tipo=="json"?".json":tipo=="csv"?".csv":".sql");
+a.click();
+}
+
+function updateSelects(){
+let clientes=JSON.parse(localStorage.clientes);
+let modulos=JSON.parse(localStorage.modulos);
+cModulo.innerHTML=modulos.map(m=>`<option value="${m.id}">${m.desc}</option>`);
+pCliente.innerHTML=clientes.map(c=>`<option value="${c.id}">${c.nombre}</option>`);
+}
+
+function loadAll(){
+renderModulos();
+renderClientes();
+renderPagos();
+}
+</script>
+
+</body>
+</html>
