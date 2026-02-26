@@ -24,7 +24,7 @@ Sistema web para control de depósitos, clientes y morosidad.
 
 ## 🌐 Demo Online
 
-👉 (Aquí puedes poner tu enlace de GitHub Pages cuando esté activo)
+👉 https://halcon-2022.github.io/deposjm/
 
 ---
 
@@ -49,7 +49,7 @@ Versión actual: v4
 
 ## 👨‍💻 Autor
 
-Desarrollado por [Tu Nombre]
+Desarrollado porel Prof: Jaime Vigil Rigacci 
 
 ---
 
